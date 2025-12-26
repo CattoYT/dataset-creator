@@ -1,0 +1,17 @@
+[project]
+name = "dataset-creator"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "audio-separator[gpu]>=0.40.0",
+    "datasets>=4.4.2",
+    "keyboard>=0.13.5",
+    "onnxruntime>=1.23.2",
+    "pandas>=2.3.3",
+    "pandas-audio-methods>=0.0.1",
+    "pydub-ng>=0.2.0",
+    "simpleaudio>=1.0.4",
+    "toml>=0.10.2",
+]

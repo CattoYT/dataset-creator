@@ -173,7 +173,7 @@ class ManualSorter:  # honestly have no idea if this is the best way to do it, t
         self.bad_files.close()
         return "Completed"
 
-    def __init__(self, dataset_name, path):
+    def __init__(self):
         self.total_good_length = 0.0
         self.total_bad_length = 0.0
         self.good = []
@@ -183,8 +183,8 @@ class ManualSorter:  # honestly have no idea if this is the best way to do it, t
         self.directory = session["Path"]
 
         # Open files for appending and reading
-        self.good_files = open(f"{dataset_name}/good.txt", "a+")
-        self.bad_files = open(f"{dataset_name}/bad.txt", "a+")
+        self.good_files = open(f"{session['Dataset name']}/good.txt", "a+")
+        self.bad_files = open(f"{session['Dataset name']}/bad.txt", "a+")
 
         # Read existing lines into lists
         self.good_files.seek(0)

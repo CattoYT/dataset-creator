@@ -1,6 +1,7 @@
 from utils import clear_the_fucking_input
 from manual_sort import ManualSorter
 import os
+from pathlib import Path
 
 
 def prompt_for_bad_processing():
@@ -17,6 +18,65 @@ def prompt_for_bad_processing():
     pass
 
 
+def init_new_session():
+    dataset_name = input("Name of dataset: ")
+    dataset_path = input("Provide dataset path: ")
+
+    if os.path.isdir(dataset_path):
+        from session import session
+
+        session["Dataset name"] = dataset_name
+        session["Path"] = Path(dataset_path).as_posix()
+
+    else:
+        raise AttributeError("Incorrect directory")
+    while True:
+        match input(
+            "How is the dataset formatted? "
+            "\n 1. Ai Hobbyist (.lab + .wav)"
+            "\n 2. LJSpeech (Not Implemented)"
+            "\n 3. VCTK (Not Implemented)\n> "
+        ):
+            case "1":
+                session["Dataset format"] = "Ai Hobbyist"
+                break
+            case "2":
+                print("Not implemented yet")
+                break
+            case "3":
+                print("Not implemented yet")
+                break
+            case _:
+                print("bro")
+    while True:
+        match input(
+            "What language is the dataset in? "
+            "\n 1. English"
+            "\n 2. Japanese"
+            "\n 3. Chinese"
+            "\n 4. Korean"
+            "\n 5. Cantonese\n> "
+        ):
+            case "1":
+                session["Language"] = "en"
+                break
+            case "2":
+                session["Language"] = "ja"
+                break
+            case "3":
+                session["Language"] = "zh"
+                break
+            case "4":
+                session["Language"] = "ko"
+                break
+            case "5":
+                session["Language"] = "yue"
+                break
+            case _:
+                print("what")
+    session.save()
+
+
 if __name__ == "__main__":
     from session import session
 
@@ -25,8 +85,9 @@ if __name__ == "__main__":
             match input(
                 f'Do you want to load the previous session.? <y/n>\nThis will load "{session["Dataset name"]}" '
             ):
+                # TODO: Add a check for if the sorting is completed,
                 case "y":
-                    sorter = ManualSorter(session["Dataset name"], session["Path"])
+                    sorter = ManualSorter()
                     match sorter.main_sort_loop():
                         case "Completed":
                             print("Successfully sorted all files.")
@@ -52,22 +113,12 @@ if __name__ == "__main__":
 
     while True:  #
         clear_the_fucking_input()
+        init_new_session()
         match input(
             "Mode? \n1. Sort\n2. Fix bad\n3. Export as Parquet\n4. Fuck off \n"
         ):
             case "1":
-                dataset_name = input("Name of dataset: ")
-                dataset_path = input("Provide dataset path: ")
-
-                if os.path.isdir(dataset_path):
-                    from session import session
-
-                    session["Dataset name"] = dataset_name
-                    session["Path"] = dataset_path
-
-                else:
-                    raise AttributeError("Incorrect directory")
-                sorter = ManualSorter(dataset_name, dataset_path)
+                sorter = ManualSorter()
                 if sorter.main_sort_loop() == "Completed":
                     print("Successfully sorted all files.")
                     break
@@ -79,12 +130,16 @@ if __name__ == "__main__":
                 os.system("cls")
                 import exporter as Exporter
 
-                print("This will export the existing session: \n")
-                print(session)
-                if input("Proceed? <y/*>") == "y":
-                    exporter = Exporter.Exporter()
-                    exporter.move_for_processing()
-                    exporter.export_as_parquet()
+                if session != session._default:
+                    print("This will export the existing session: \n")
+                    print(session)
+                    if input("Proceed? <y/*>") == "y":
+                        exporter = Exporter.Exporter()
+                        exporter.move_for_processing()
+                        exporter.export_as_parquet()
+                else:
+                    dataset_name = input("Name of dataset: ")
+                    dataset_path = input("Provide dataset path: ")
 
             case "4":
                 exit()

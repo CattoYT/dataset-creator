@@ -45,6 +45,7 @@ def generate_list_file(character=None, language=None):
 
     # TODO: fix this entire file honeslty
     for file in iter_files(f"output/{character}", ".lab"):
+        print(file)
         text = open(file, "r").read()
         if "{" in text or "}" in text:  # cehck if placehgoldewers are presnet
             continue
@@ -54,7 +55,10 @@ def generate_list_file(character=None, language=None):
 
         wav_path = file.replace(".lab", ".wav")
         total_duration += utils.get_wav_length(wav_path)
-        data_lines.append(Data(wav_path, character, language, text))
+        print(os.path.join(os.getcwd(), file))
+        data_lines.append(
+            Data(os.path.join(os.getcwd(), file), character, language, text)
+        )
 
     with open(f"{character.lower()}.list", "w") as f:
         for i in data_lines:

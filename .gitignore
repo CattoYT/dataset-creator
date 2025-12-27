@@ -10,3 +10,5 @@ Cyrene/bad.txt
 Cyrene/good.txt
 session/session.toml
 settings/settings.toml
+output/
+exports/

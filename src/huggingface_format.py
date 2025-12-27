@@ -3,6 +3,8 @@ import pandas as pd
 from datasets import Dataset
 from pandas_audio_methods import SFMethods
 
+import os
+
 pd.api.extensions.register_series_accessor("sf")(SFMethods)
 
 
@@ -29,10 +31,8 @@ def create_parquet(list_file: str):
     df2 = df[["audio", "text"]]
 
     hf_dataset = Dataset.from_pandas(df2)
-    parquet_file = list_file.replace("list", "parquet")
+    parquet_file = os.path.basename(list_file).replace("list", "parquet")
     hf_dataset.to_parquet(parquet_file)
-
-    import os
 
     os.makedirs(f"exports/{parquet_file.replace('parquet', '')}", exist_ok=True)
     # shutil.copytree("Cyrene-cleaned", "exports/cyrene-cleaned/Cyrene-cleaned")

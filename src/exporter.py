@@ -1,3 +1,4 @@
+from pathlib import Path
 import os
 import shutil
 import utils
@@ -39,14 +40,17 @@ class Exporter:
             data = f.readlines()
 
             if self.export_type == "Parquet" and self.dataset_format == "Ai Hobbyist":
+                os.mkdir(f"output/{self.dataset_name}")
                 for file_path in data:
+                    file_path = file_path.strip()
+
                     shutil.copyfile(
                         file_path,
                         f"output/{self.dataset_name}/{os.path.basename(file_path)}",
                     )  # copy wav
                     shutil.copyfile(
                         file_path.replace(".wav", ".lab"),
-                        f"output/{self.dataset_name}/{os.path.basename(file_path)}",
+                        f"output/{self.dataset_name}/{os.path.basename(file_path.replace('.wav', '.lab'))}",
                     )  # TODO: test if i should leave it as .lab or .txt, its both rawtext just naming convention sdhit
 
     def export_as_parquet(self):
@@ -61,6 +65,7 @@ class Exporter:
     """
 
     def generate_list_file(self):
+        print("creating list")
         language = session["Language"]
         if language is None:
             language = input("""Provide language
@@ -87,10 +92,19 @@ class Exporter:
             #     continue
 
             wav_path = file.replace(".lab", ".wav")
+            print(wav_path)
             total_duration += utils.get_wav_length(wav_path)
-            data_lines.append(Data(wav_path, self.dataset_name, language, text))
 
-        with open(f"{self.dataset_name.lower()}.list", "w") as f:
+            data_lines.append(
+                Data(
+                    Path("output/" + wav_path).as_posix(),
+                    self.dataset_name,
+                    language,
+                    text,
+                )
+            )
+
+        with open(f"output/{self.dataset_name.lower()}.list", "w") as f:
             for i in data_lines:
                 f.write(i.output() + "\n")
 

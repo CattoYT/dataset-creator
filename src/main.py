@@ -1,6 +1,5 @@
 from utils import clear_the_fucking_input
 from manual_sort import ManualSorter
-import generate_list
 import os
 
 

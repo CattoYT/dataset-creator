@@ -36,8 +36,14 @@ class Session:
         if os.path.exists(self._path):
             with open(self._path, "r") as f:
                 self.data = toml.loads(f.read())
-                for value in self.data:
-                    print(value)
+                for key in self._default:
+                    try:
+                        self.data[key]
+                    except KeyError:
+                        print(
+                            f'Missing key "{key}". Replacing "{key}" with default value.'
+                        )
+                        self.data[key] = self._default[key]
 
         else:
             self.data = self._default.copy()

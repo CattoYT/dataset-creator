@@ -40,7 +40,10 @@ class Exporter:
             data = f.readlines()
 
             if self.export_type == "Parquet" and self.dataset_format == "Ai Hobbyist":
-                os.mkdir(f"output/{self.dataset_name}")
+                try:
+                    os.makedirs(f"output/{self.dataset_name}")
+                except FileExistsError:
+                    pass
                 for file_path in data:
                     file_path = file_path.strip()
 
@@ -97,7 +100,7 @@ class Exporter:
 
             data_lines.append(
                 Data(
-                    Path("output/" + wav_path).as_posix(),
+                    Path(wav_path).as_posix(),
                     self.dataset_name,
                     language,
                     text,

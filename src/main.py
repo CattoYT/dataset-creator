@@ -2,6 +2,7 @@ from utils import clear_the_fucking_input
 from manual_sort import ManualSorter
 import os
 from pathlib import Path
+import time
 
 
 def prompt_for_bad_processing():
@@ -85,18 +86,20 @@ if __name__ == "__main__":
             match input(
                 f'Do you want to load the previous session.? <y/n>\nThis will load "{session["Dataset name"]}" '
             ):
-                # TODO: Add a check for if the sorting is completed,
+                # # TODO: Add a check for if the sorting is completed,
                 case "y":
-                    sorter = ManualSorter()
-                    match sorter.main_sort_loop():
-                        case "Completed":
-                            print("Successfully sorted all files.")
-                            break
-                        case "Requested Exit":
-                            print("Early exit requested")
-                            break
+                    #     sorter = ManualSorter()
+                    #     match sorter.main_sort_loop():
+                    #         case "Completed":
+                    #             print("Successfully sorted all files.")
+                    #             break
+                    #         case "Requested Exit":
+                    #             print("Early exit requested")
+                    #             break
+                    break
 
                 case "n":
+                    init_new_session()
                     break
                 case _:
                     pass
@@ -113,15 +116,20 @@ if __name__ == "__main__":
 
     while True:  #
         clear_the_fucking_input()
-        init_new_session()
+
         match input(
             "Mode? \n1. Sort\n2. Fix bad\n3. Export as Parquet\n4. Fuck off \n"
         ):
             case "1":
                 sorter = ManualSorter()
-                if sorter.main_sort_loop() == "Completed":
-                    print("Successfully sorted all files.")
-                    break
+                match sorter.main_sort_loop():
+                    case "Completed":
+                        print("Successfully sorted all files.")
+                        break
+                    case "Requested Exit":
+                        print("Early exit requested")
+                        break
+
             case "2":
                 from audio_processor import AudioProcessor
 
@@ -134,9 +142,17 @@ if __name__ == "__main__":
                     print("This will export the existing session: \n")
                     print(session)
                     if input("Proceed? <y/*>") == "y":
-                        exporter = Exporter.Exporter()
-                        exporter.move_for_processing()
-                        exporter.export_as_parquet()
+                        try:
+                            exporter = Exporter.Exporter()
+                            exporter.move_for_processing()
+                            exporter.export_as_parquet()
+                            print(
+                                f"Successfully exported the dataset to exports/{session['Dataset name']}.parquet!"
+                            )
+                            time.sleep(2)
+                        except Exception as e:
+                            print(e)
+
                 else:
                     dataset_name = input("Name of dataset: ")
                     dataset_path = input("Provide dataset path: ")

@@ -5,20 +5,6 @@ from pathlib import Path
 import time
 
 
-def prompt_for_bad_processing():
-    # start with vad, then uvr, then possibly audiosr?
-    from session import session
-
-    print(session)
-    audio_processor = AudioProcessor()
-    with open(f"{session['Dataset']}/bad.txt") as f:
-        files = f.readlines()
-        for file in files:
-            input(f"Will process {file}. Press enter to continue")
-            audio_processor.uvr(file)
-    pass
-
-
 def init_new_session():
     dataset_name = input("Name of dataset: ")
     dataset_path = input("Provide dataset path: ")
@@ -131,9 +117,11 @@ if __name__ == "__main__":
                         break
 
             case "2":
-                from audio_processor import AudioProcessor
+                from processing.audio_processor import AudioProcessor
 
-                prompt_for_bad_processing()
+                processor = AudioProcessor()
+                processor.prompt_for_bad_processing()  # kinda just fuck off from main loop icl
+
             case "3":
                 os.system("cls")
                 import exporter as Exporter

@@ -25,6 +25,7 @@ class Session:
 
     def __setitem__(self, name, value):
         self.data[name] = value
+        self.save()
 
     def __new__(cls):
         if cls._instance is None:

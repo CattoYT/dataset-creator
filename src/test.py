@@ -1,26 +1,29 @@
 from audio_separator.separator import Separator
+import os
 
 
 class AudioProcessor:
     def __init__(self):
-        print("Will copy files, then process")
-        self.preserve_original = True
-        self.separator = Separator()
+        # print("Will copy files, then process")
+        # self.preserve_original = True
+        # self.separator = Separator()
         # self.separator.load_model(
         #     model_filename="Reverb_HQ_By_FoxJoy.onnx"
         # )  # we need this as well as de-echo
 
-        # while True:
-        #     match input("Do you want to: \n1. edit the files\n2. Use a copy?"):
-        #         case "1":
-        #             self.preserve_original = False
-        #             self.separator = Separator()
+        while True:
+            match input("Do you want to: \n1. edit the files\n2. Use a copy?"):
+                case "1":
+                    self.preserve_original = False
+                    self.separator = Separator()
+                    break
 
-        #         case "2":
-        #             self.preserve_original = True
-        #             self.separator = Separator(
-        #                 output_dir=f"output/{session['Dataset']}/processed_files/"
-        #             )
+                case "2":
+                    self.preserve_original = True
+                    self.separator = Separator(
+                        output_dir="output/test/processed_files/"
+                    )
+                    break
 
     def format(self, file):
         # save this for ffmpeg
@@ -30,8 +33,18 @@ class AudioProcessor:
         # file = self.separator.separate(file)
         print(file)
         self.separator.load_model("UVR-DeEcho-DeReverb.pth")
-        file = self.separator.separate(file)
-        print(file)
+        out_file = self.separator.separate(file)
+        self.separator.output_dir
+        os.remove(
+            f"{self.separator.output_dir}/{out_file[1]}"
+        )  # remove the file that still has 'reverb'
+        os.rename(
+            f"{self.separator.output_dir}/{out_file[0]}",
+            f"{self.separator.output_dir}/{os.path.basename(file)}".replace(
+                ".wav", "-fixed.wav"
+            ),  # little janky but like idc
+        )
+        return out_file[0]
         pass
 
 

@@ -53,8 +53,27 @@ class Exporter:
                     )  # copy wav
                     shutil.copyfile(
                         file_path.replace(".wav", ".lab"),
-                        f"output/{self.dataset_name}/{os.path.basename(file_path.replace('.wav', '.lab'))}",
-                    )  # TODO: test if i should leave it as .lab or .txt, its both rawtext just naming convention sdhit
+                        f"output/{self.dataset_name}/{os.path.basename(file_path.replace('.wav', '.txt'))}",
+                    )
+        with open(f"{self.dataset_name}/processed.txt", "r") as f:
+            data = f.readlines()
+
+            if self.export_type == "Parquet" and self.dataset_format == "Ai Hobbyist":
+                try:
+                    os.makedirs(f"output/{self.dataset_name}")
+                except FileExistsError:
+                    pass
+                for file_path in data:
+                    file_path = file_path.strip()
+
+                    shutil.copyfile(
+                        file_path,
+                        f"output/{self.dataset_name}/{os.path.basename(file_path)}",
+                    )  # copy wav
+                    shutil.copyfile(
+                        file_path.replace(".wav", ".lab"),
+                        f"output/{self.dataset_name}/{os.path.basename(file_path.replace('.wav', '.txt'))}",
+                    )
 
     def export_as_parquet(self):
         self.generate_list_file()
@@ -86,7 +105,7 @@ class Exporter:
         total_duration = 0.0
 
         # TODO: fix this entire file honeslty
-        for file in iter_files(f"output/{self.dataset_name}", ".lab"):
+        for file in iter_files(f"output/{self.dataset_name}", ".txt"):
             text = open(file, "r").read()
             if "{" in text or "}" in text:  # cehck if placehgoldewers are presnet
                 continue
@@ -94,7 +113,7 @@ class Exporter:
             # if text.count(" ") < 2:  # check if its long enough to be ok
             #     continue
 
-            wav_path = file.replace(".lab", ".wav")
+            wav_path = file.replace(".txt", ".wav")
             print(wav_path)
             total_duration += utils.get_wav_length(wav_path)
 

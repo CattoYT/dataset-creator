@@ -1,15 +1,19 @@
+import shutil
 import time
 import subprocess
 import threading
 import os
 import utils
-from audio_separator.separator import Separator
+
 from session import session
 
 
 class AudioProcessor:
     def __init__(self):
-        print("Will copy files, then process")
+        # print("Will copy files, then process")
+        print("Loading uvr...")
+        from audio_separator.separator import Separator
+
         self.preserve_original = True
         self.separator = Separator()
         # self.separator.load_model(
@@ -26,7 +30,7 @@ class AudioProcessor:
                 case "2":
                     self.preserve_original = True
                     self.separator = Separator(
-                        output_dir=f"output/{session['Dataset']}/processed_files/"
+                        output_dir=f"output/{session['Dataset name']}/processed_files/"
                     )
                     break
         self.separator.load_model("UVR-DeEcho-DeReverb.pth")
@@ -53,11 +57,17 @@ class AudioProcessor:
 
         print(session)
 
-        with open(f"{session['Dataset']}/bad.txt") as f:
+        with open(f"{session['Dataset name']}/bad.txt") as f:
             files = f.readlines()
-            with open(f"{session['Dataset']}/processed.txt", "a+") as processed_txt:
+            with open(
+                f"{session['Dataset name']}/processed.txt", "a+"
+            ) as processed_txt:
+                input(
+                    "Will process all bad files. Press enter to continue.\nNote: This doesn't guarantee the produced files are now 'good'!"
+                )
                 for file in files:
-                    input(f"Will process {file}. Press enter to continue")
+                    file = file.strip()
+
                     processed_file = self.uvr(file)
 
                     if settings["Play after processing"]:
@@ -69,6 +79,11 @@ class AudioProcessor:
                     else:
                         processed_txt.write(processed_file + "\n")
 
+                    shutil.copyfile(
+                        file.replace(".wav", ".lab"),
+                        f"output/{session['Dataset name']}/processed_files/{os.path.basename(processed_file.replace('.wav', '.txt'))}",
+                    )
+
     def format(self, file):
         # save this for ffmpeg
         pass
@@ -76,7 +91,21 @@ class AudioProcessor:
     def uvr(self, file, agressive=False, de_echo=True):
         # file = self.separator.separate(file)
         # self.separator.load_model("UVR-DeEcho-DeReverb.pth")
-        file = self.separator.separate(file)
+        self.separator.load_model("UVR-DeEcho-DeReverb.pth")
+        out_file = self.separator.separate(file)
+        self.separator.output_dir
+        os.remove(
+            f"{self.separator.output_dir}/{out_file[1]}"
+        )  # remove the file that still has 'reverb'
+        os.rename(
+            f"{self.separator.output_dir}/{out_file[0]}",
+            f"{self.separator.output_dir}/{os.path.basename(file)}".replace(
+                ".wav", "-fixed.wav"
+            ),  # little janky but like idc
+        )
+        return f"{self.separator.output_dir}/{
+            os.path.basename(file).replace('.wav', '-fixed.wav')
+        }"
         # TODO: find the processed one, rename, then move
 
     # pasted from manual sort, praying for it to work lol

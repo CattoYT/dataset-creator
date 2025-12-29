@@ -29,10 +29,10 @@ def init_new_session():
                 break
             case "2":
                 print("Not implemented yet")
-                break
+                # break
             case "3":
                 print("Not implemented yet")
-                break
+                # break
             case _:
                 print("bro")
     while True:

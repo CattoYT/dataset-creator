@@ -1,14 +1,11 @@
-chapter4_43_cyrene_102_(No Reverb)_Reverb_HQ_By_FoxJoy.wav
-chapter4_43_cyrene_102_(No Reverb)_UVR-DeEcho-DeReverb.wav
-chapter4_43_cyrene_102_(Reverb)_Reverb_HQ_By_FoxJoy.wav
 chapter4_43_cyrene_102.wav
 chapter4_43_cyrene_103.wav
 uv.lock
 src/__pycache__/
 __pycache__/*
-Cyrene/bad.txt
-Cyrene/good.txt
-session/session.toml
-settings/settings.toml
+Cyrene/*
+session/*
+settings/*
 output/
 exports/
+src/processing/__pycache__

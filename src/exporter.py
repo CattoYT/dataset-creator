@@ -71,7 +71,7 @@ class Exporter:
                         f"output/{self.dataset_name}/{os.path.basename(file_path)}",
                     )  # copy wav
                     shutil.copyfile(
-                        file_path.replace(".wav", ".lab"),
+                        file_path.replace(".wav", ".txt"),
                         f"output/{self.dataset_name}/{os.path.basename(file_path.replace('.wav', '.txt'))}",
                     )
 

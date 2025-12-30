@@ -1,4 +1,22 @@
-todo:
-- speed up the startup process
-- make it so u have to be focused in instead of just using keyboard ra
-- detect the dataset format 
+# Dataset-creator (Koequet)
+
+The $\displaystyle{\lim_{x \to \infty}}$ best audio dataset formatter!
+
+This is currently compatible with datasets from [Ai Hobbyist's datasets](https://github.com/AI-Hobbyist/StarRail_Datasets), but in the future will be compatible with as many formats as I care about.  
+This currently supports exporting to parquet (hence the shit name), with LJSpeech coming soon!
+
+# Installation
+## Method 1: uv
+1. Download the src
+2. run ```uv sync``` to download dependencies for your GPU
+3. run ```uv run src/main.py``` to start!
+
+## Method 2: pre-built nuitka binary
+1. Download the binary
+2. Pray
+3. Run the .exe
+4. pray
+5. ???
+6. profit?
+
+Please just do method 1.

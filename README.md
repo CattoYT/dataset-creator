@@ -19,4 +19,4 @@ This currently supports exporting to parquet (hence the shit name), with LJSpeec
 5. ???
 6. profit?
 
-Please just do method 1.
+Please just do method 1. Also method 2 is already outdated 💀

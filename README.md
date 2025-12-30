@@ -19,4 +19,5 @@ This currently supports exporting to parquet (hence the shit name), with LJSpeec
 5. ???
 6. profit?
 
-Please just do method 1. Also method 2 is already outdated 💀
+Please just do method 1. Also method 2 is already outdated 💀  
+Method 2 is also completely untested on any device other than my own soooooo your mileage may vary. I can guarantee method 1 works though.

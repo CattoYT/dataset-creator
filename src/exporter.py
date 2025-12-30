@@ -17,15 +17,6 @@ class Data:
         return f"{self.path}|{self.character}|{self.language}|{self.text}"
 
 
-def iter_files(directory, extension):  # bro i only noticed this was here just now XDDDD
-    # TODO: move this to utils and refactor
-    # RECURSIVE BTW
-    for root, _, files in os.walk(directory):
-        for file in files:
-            if file.endswith(extension):
-                yield os.path.join(root, file)
-
-
 class Exporter:
     def __init__(self, export_type="Parquet"):
         self.dataset_name = session["Dataset name"]
@@ -105,7 +96,7 @@ class Exporter:
         total_duration = 0.0
 
         # TODO: fix this entire file honeslty
-        for file in iter_files(f"output/{self.dataset_name}", ".txt"):
+        for file in utils.iter_files(f"output/{self.dataset_name}", ".txt"):
             text = open(file, "r").read()
             if "{" in text or "}" in text:  # cehck if placehgoldewers are presnet
                 continue

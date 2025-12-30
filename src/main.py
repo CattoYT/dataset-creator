@@ -1,7 +1,7 @@
 from utils import clear_the_fucking_input
 from manual_sort import ManualSorter
 import os
-from pathlib import Path
+from pathlib import Path, WindowsPath
 import time
 
 
@@ -82,6 +82,42 @@ if __name__ == "__main__":
                     #         case "Requested Exit":
                     #             print("Early exit requested")
                     #             break
+                    # import utils
+
+                    # test this another time its 00:34
+                    # also either way i can pass and if the user tries to sort it will autoexit
+
+                    # good = open(f"{session['Dataset name']}/good.txt", "r").readlines()
+                    # bad = open(f"{session['Dataset name']}/bad.txt", "r").readlines()
+                    # all_sorted = True
+                    # for file in utils.iter_files(session["Path"], ".wav"):
+                    #     if WindowsPath(file) not in good and file not in bad:
+                    #         print(f"Unsorted file found: {file}")
+                    #         all_sorted = False
+                    #         break
+                    # if all_sorted:
+                    #     while True:
+                    #         match input(
+                    #             "All files already sorted.\nDo you want to export? <y/n>"
+                    #         ):
+                    #             case "y":
+                    #                 import exporter as Exporter
+
+                    #                 exporter = Exporter.Exporter()
+                    #                 exporter.move_for_processing()
+                    #                 exporter.export_as_parquet()
+                    #                 print(
+                    #                     f"Successfully exported the dataset to exports/{session['Dataset name']}.parquet!"
+                    #                 )
+                    #                 time.sleep(2)
+                    #                 input("Press enter to exit...")
+                    #                 exit(0)
+
+                    #             case "n":
+                    #                 break
+                    #             case _:
+                    #                 pass
+
                     break
 
                 case "n":

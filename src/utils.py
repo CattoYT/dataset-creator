@@ -26,3 +26,12 @@ def get_wav_length(file):
         rate = wf.getframerate()
         duration = frames / float(rate)
         return duration
+
+
+def iter_files(directory, extension):  # bro i only noticed this was here just now XDDDD
+    # TODO: move this to utils and refactor
+    # RECURSIVE BTW
+    for root, _, files in os.walk(directory):
+        for file in files:
+            if file.endswith(extension):
+                yield os.path.join(root, file)

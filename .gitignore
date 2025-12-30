@@ -9,3 +9,5 @@ settings/*
 output/
 exports/
 src/processing/__pycache__
+
+main.*

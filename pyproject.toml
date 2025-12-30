@@ -1,7 +1,7 @@
 [project]
-name = "dataset-creator"
+name = "koequet"
 version = "0.1.0"
-description = "Add your description here"
+description = "The worst dataset formatter in the history of EVER."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [

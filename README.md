@@ -1,6 +1,6 @@
 # Dataset-creator (Koequet)
 
-The $\displaystyle{\lim_{x \to \infty}}$ best audio dataset formatter!
+The $\displaystyle{\lim_{n \to \infty}}$ best audio dataset formatter!
 
 This is currently compatible with datasets from [Ai Hobbyist's datasets](https://github.com/AI-Hobbyist/StarRail_Datasets), but in the future will be compatible with as many formats as I care about.  
 This currently supports exporting to parquet (hence the shit name), with LJSpeech coming soon!

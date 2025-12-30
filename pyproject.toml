@@ -15,3 +15,8 @@ dependencies = [
     "simpleaudio>=1.0.4",
     "toml>=0.10.2",
 ]
+
+[dependency-groups]
+dev = [
+    "nuitka>=2.8.9",
+]

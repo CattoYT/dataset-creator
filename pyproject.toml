@@ -12,7 +12,7 @@ dependencies = [
     "pandas>=2.3.3",
     "pandas-audio-methods>=0.0.1",
     "pydub-ng>=0.2.0",
-    "simpleaudio>=1.0.4",
+    "simpleaudio-patched>=1.0.5",
     "toml>=0.10.2",
 ]
 

@@ -140,7 +140,7 @@ if __name__ == "__main__":
         clear_the_fucking_input()
 
         match input(
-            "Mode? \n1. Sort\n2. Fix bad\n3. Export as Parquet\n4. Fuck off \n"
+            "Mode? \n1. Sort\n2. Fix bad files\n3. Export as Parquet\n4. Quit \n"
         ):
             case "1":
                 sorter = ManualSorter()

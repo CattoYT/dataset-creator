@@ -5,14 +5,15 @@ description = "The worst dataset formatter in the history of EVER."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "audio-separator[gpu]>=0.40.0",
-    "datasets>=4.4.2",
+    "audio-separator[gpu]>=0.41.0",
+    "datasets>=4.5.0",
     "keyboard>=0.13.5",
     "onnxruntime>=1.23.2",
     "pandas>=2.3.3",
     "pandas-audio-methods>=0.0.1",
     "pydub-ng>=0.2.0",
-    "simpleaudio>=1.0.4",
+    # "simpleaudio>=1.0.4",
+    "simpleaudio-patched", # win dependency only, mac compiles fine
     "toml>=0.10.2",
 ]
 
@@ -20,3 +21,6 @@ dependencies = [
 dev = [
     "nuitka>=2.8.9",
 ]
+
+[tool.uv.sources]
+simpleaudio-patched = { path = "libs/simpleaudio_patched-1.0.5-cp313-cp313-win_amd64.whl" }

@@ -46,25 +46,31 @@ class Exporter:
                         file_path.replace(".wav", ".lab"),
                         f"output/{self.dataset_name}/{os.path.basename(file_path.replace('.wav', '.txt'))}",
                     )
-        with open(f"{self.dataset_name}/processed.txt", "r") as f:
-            data = f.readlines()
+        try:
+            with open(f"{self.dataset_name}/processed.txt", "r") as f:
+                data = f.readlines()
 
-            if self.export_type == "Parquet" and self.dataset_format == "Ai Hobbyist":
-                try:
-                    os.makedirs(f"output/{self.dataset_name}")
-                except FileExistsError:
-                    pass
-                for file_path in data:
-                    file_path = file_path.strip()
+                if (
+                    self.export_type == "Parquet"
+                    and self.dataset_format == "Ai Hobbyist"
+                ):
+                    try:
+                        os.makedirs(f"output/{self.dataset_name}")
+                    except FileExistsError:
+                        pass
+                    for file_path in data:
+                        file_path = file_path.strip()
 
-                    shutil.copyfile(
-                        file_path,
-                        f"output/{self.dataset_name}/{os.path.basename(file_path)}",
-                    )  # copy wav
-                    shutil.copyfile(
-                        file_path.replace(".wav", ".txt"),
-                        f"output/{self.dataset_name}/{os.path.basename(file_path.replace('.wav', '.txt'))}",
-                    )
+                        shutil.copyfile(
+                            file_path,
+                            f"output/{self.dataset_name}/{os.path.basename(file_path)}",
+                        )  # copy wav
+                        shutil.copyfile(
+                            file_path.replace(".wav", ".txt"),
+                            f"output/{self.dataset_name}/{os.path.basename(file_path.replace('.wav', '.txt'))}",
+                        )
+        except Exception:
+            print("No processed files found")
 
     def export_as_parquet(self):
         self.generate_list_file()

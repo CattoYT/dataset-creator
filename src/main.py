@@ -67,6 +67,8 @@ def init_new_session():
 if __name__ == "__main__":
     from session import session
 
+    print(session)
+
     if not session.check_presence():
         if session["Path"] == "":
             init_new_session()

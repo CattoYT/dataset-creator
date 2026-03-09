@@ -33,6 +33,9 @@ class Session:
             cls._instance.load()
         return cls._instance
 
+    def check_presence(self):
+        return os.path.exists(self._path)
+
     def load(self):
         if os.path.exists(self._path):
             with open(self._path, "r") as f:

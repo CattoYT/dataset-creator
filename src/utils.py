@@ -1,17 +1,21 @@
 # from termios import tcflush
 import os
-import msvcrt
 
 
 def clear_the_fucking_input():
     if os.name == "nt":
+        import msvcrt
+
         while msvcrt.kbhit():
             msvcrt.getch()
             # windows currently and i cant test this lol
     # elif os.name == "posix":
+    #     import sys
+    #     import termios
+
     #     try:
     #         if sys.stdin.isatty():
-    #             tcflush(sys.stdin.fileno(), TCIFLUSH)
+    #             termios.tcflush(sys.stdin.fileno(), termios.TCIFLUSH)
     #     except Exception:
     #         pass
 

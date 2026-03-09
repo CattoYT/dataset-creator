@@ -69,10 +69,10 @@ if __name__ == "__main__":
 
     print(session)
 
-    if not session.check_presence():
-        if session["Path"] == "":
-            init_new_session()
+    if session["Path"] == "":
+        init_new_session()
     else:
+        print(session["Dataset name"])
         if session["Dataset name"] != "":
             while True:
                 match input(

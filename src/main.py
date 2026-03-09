@@ -68,9 +68,10 @@ if __name__ == "__main__":
     from session import session
 
     if not session.check_presence():
-        init_new_session()
+        if session["Path"] == "":
+            init_new_session()
     else:
-        if session["Dataset name"]:
+        if session["Dataset name"] != "":
             while True:
                 match input(
                     f'Do you want to load the previous session.? <y/n>\nThis will load "{session["Dataset name"]}" '

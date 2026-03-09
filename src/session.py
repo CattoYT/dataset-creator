@@ -30,7 +30,7 @@ class Session:
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            cls._instance.load()
+
         return cls._instance
 
     def check_presence(self):

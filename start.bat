@@ -1,6 +1,6 @@
 where uv >nul 2>&1
 if errorlevel 1 (
-	echo 'uv' not found — installing via Astral...
+	echo 'uv' not found
 	powershell -NoProfile -ExecutionPolicy Bypass -Command "irm 'https://astral.sh/uv/install.ps1' | iex"
 	if errorlevel 1 (
 		echo Failed to install 'uv'. Please install manually and re-run.
